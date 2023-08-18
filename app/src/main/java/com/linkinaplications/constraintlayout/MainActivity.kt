@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.linkinaplications.constraintlayout.ui.theme.ConstraintLayoutTheme
 
@@ -38,6 +39,47 @@ class MainActivity : ComponentActivity() {
 }
 
 @Preview
+@Composable
+fun ConstraintChainExample() {
+
+    ConstraintLayout(Modifier.fillMaxSize()) {
+
+        val (boxRed, boxGreen, boxYellow) = createRefs()
+
+        Box(modifier = Modifier
+            .size(75.dp)
+            .background(Color.Green)
+            .constrainAs(boxGreen) {
+                start.linkTo(parent.start)
+                end.linkTo(boxRed.start)
+            })
+
+        Box(modifier = Modifier
+            .size(75.dp) //<------------------------------mover el tamaño para ver la barrera
+            .background(Color.Red)
+            .constrainAs(boxRed) {
+                start.linkTo(boxGreen.end)
+                end.linkTo(boxYellow.start)
+
+            })
+
+        Box(modifier = Modifier
+            .size(75.dp)
+            .background(Color.Yellow)
+            .constrainAs(boxYellow) {
+                start.linkTo(boxRed.end)
+                end.linkTo(parent.end)
+
+            })
+
+        //createHorizontalChain(boxRed, boxGreen, boxYellow, chainStyle = ChainStyle.Packed) <-- descomentar para ver diferencias
+        //createHorizontalChain(boxRed, boxGreen, boxYellow, chainStyle = ChainStyle.Spread) <--- descomentar para ver diferencias
+        createHorizontalChain(boxRed, boxGreen, boxYellow, chainStyle = ChainStyle.SpreadInside)
+    }
+
+}
+
+
 @Composable
 fun ConstraintExampleGuide() {
     ConstraintLayout(Modifier.fillMaxSize()) {
