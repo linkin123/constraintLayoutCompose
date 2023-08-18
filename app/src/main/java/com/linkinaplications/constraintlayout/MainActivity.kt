@@ -31,7 +31,9 @@ class MainActivity : ComponentActivity() {
                 ) {
                     //Greeting("Android")
                     //ConstraintExample()
-                    ConstraintBarrier()
+                    //ConstraintBarrier()
+                    //ConstraintExampleGuide()
+                    ConstraintChainExample()
                 }
             }
         }
@@ -72,9 +74,9 @@ fun ConstraintChainExample() {
 
             })
 
-        //createHorizontalChain(boxRed, boxGreen, boxYellow, chainStyle = ChainStyle.Packed) <-- descomentar para ver diferencias
-        //createHorizontalChain(boxRed, boxGreen, boxYellow, chainStyle = ChainStyle.Spread) <--- descomentar para ver diferencias
-        createHorizontalChain(boxRed, boxGreen, boxYellow, chainStyle = ChainStyle.SpreadInside)
+        createHorizontalChain(boxRed, boxGreen, boxYellow, chainStyle = ChainStyle.Packed) //<-- descomentar para ver diferencias
+        //createHorizontalChain(boxRed, boxGreen, boxYellow, chainStyle = ChainStyle.Spread) //<--- descomentar para ver diferencias
+        //createHorizontalChain(boxRed, boxGreen, boxYellow, chainStyle = ChainStyle.SpreadInside)
     }
 
 }
