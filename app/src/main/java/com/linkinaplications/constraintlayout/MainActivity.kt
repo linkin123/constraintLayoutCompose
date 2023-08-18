@@ -28,10 +28,66 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    //Greeting("Android")
+                    //ConstraintExample()
+                    ConstraintBarrier()
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun ConstraintExampleGuide() {
+    ConstraintLayout(Modifier.fillMaxSize()) {
+        //val startGuideline = createGuidelineFromTop(16.dp)
+
+        val boxRed = createRef()
+        val toptGuide = createGuidelineFromTop(0.1f)
+        val startGuide = createGuidelineFromStart(0.25f)
+
+
+        Box(modifier = Modifier
+            .size(125.dp)
+            .background(Color.Red)
+            .constrainAs(boxRed) {
+                top.linkTo(toptGuide)
+                start.linkTo(startGuide)
+            })
+    }
+}
+
+
+
+@Composable
+fun ConstraintBarrier() {
+    ConstraintLayout(Modifier.fillMaxSize()) {
+        val (boxRed, boxGreen, boxYellow) = createRefs()
+
+        val barrier = createEndBarrier(boxRed, boxGreen)
+
+        Box(modifier = Modifier
+            .size(125.dp) //<------------------------------mover el tamaño para ver la barrera
+            .background(Color.Green)
+            .constrainAs(boxGreen) {
+                start.linkTo(parent.start, margin = 16.dp)
+            })
+
+        Box(modifier = Modifier
+            .size(225.dp) //<------------------------------mover el tamaño para ver la barrera
+            .background(Color.Red)
+            .constrainAs(boxRed) {
+                top.linkTo(boxGreen.bottom)
+                start.linkTo(parent.start, margin = 32.dp)
+            })
+
+        Box(modifier = Modifier
+            .size(50.dp)
+            .background(Color.Yellow)
+            .constrainAs(boxYellow) {
+                start.linkTo(barrier)
+            })
     }
 }
 
@@ -43,38 +99,52 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview
 @Composable
 fun ConstraintExample() {
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (boxRed, boxBlue, boxYellow, boxMagenta, boxWhite) = createRefs()
 
-        Box(modifier= Modifier.size(125.dp).background(Color.Red).constrainAs(boxRed){
-            top.linkTo(parent.top)
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
-            bottom.linkTo(parent.bottom)
-        })
-        Box(modifier= Modifier.size(125.dp).background(Color.White).constrainAs(boxWhite){
-            top.linkTo(boxRed.bottom)
-            start.linkTo(parent.start)
-            end.linkTo(boxRed.start)
-        })
-        Box(modifier= Modifier.size(125.dp).background(Color.Blue).constrainAs(boxBlue){
-            top.linkTo(boxRed.bottom)
-            start.linkTo(boxRed.end)
-            end.linkTo(parent.end)
-        })
-        Box(modifier= Modifier.size(125.dp).background(Color.Yellow).constrainAs(boxYellow){
-            start.linkTo(parent.start)
-            end.linkTo(boxRed.start)
-            bottom.linkTo(boxRed.top)
-        })
-        Box(modifier= Modifier.size(125.dp).background(Color.Magenta).constrainAs(boxMagenta){
-            start.linkTo(boxRed.end)
-            end.linkTo(parent.end)
-            bottom.linkTo(boxRed.top)
-        })
+        Box(modifier = Modifier
+            .size(125.dp)
+            .background(Color.Red)
+            .constrainAs(boxRed) {
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                bottom.linkTo(parent.bottom)
+            })
+        Box(modifier = Modifier
+            .size(125.dp)
+            .background(Color.White)
+            .constrainAs(boxWhite) {
+                top.linkTo(boxRed.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(boxRed.start)
+            })
+        Box(modifier = Modifier
+            .size(125.dp)
+            .background(Color.Blue)
+            .constrainAs(boxBlue) {
+                top.linkTo(boxRed.bottom)
+                start.linkTo(boxRed.end)
+                end.linkTo(parent.end)
+            })
+        Box(modifier = Modifier
+            .size(125.dp)
+            .background(Color.Yellow)
+            .constrainAs(boxYellow) {
+                start.linkTo(parent.start)
+                end.linkTo(boxRed.start)
+                bottom.linkTo(boxRed.top)
+            })
+        Box(modifier = Modifier
+            .size(125.dp)
+            .background(Color.Magenta)
+            .constrainAs(boxMagenta) {
+                start.linkTo(boxRed.end)
+                end.linkTo(parent.end)
+                bottom.linkTo(boxRed.top)
+            })
 
     }
 }
